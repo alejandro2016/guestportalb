@@ -1,0 +1,102 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>.::GuestPortal::.</title>
+<link href="jquery.mobile.theme.css" rel="stylesheet" type="text/css"/>
+<link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="css/css.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+.ui-body-c,.ui-dialog.ui-overlay-c{
+    text-shadow: 0pt 0px 0pt rgb(0, 0, 0); 
+}
+.ui-body-c, .ui-body-c input, .ui-body-c select, .ui-body-c textarea, .ui-body-c button{
+        font-family: Helvetica, Arial, sans-serif, Verdana !important;
+        font-size: 12px !important;
+        text-shadow: none !important;
+        color:black !important;
+}
+p {
+	font-size: 12px !important;
+	color: #FFF !important;
+}
+
+</style>
+<script src="webworks.js" type="text/javascript"></script>
+<script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head> 
+<body>
+
+<div data-role="page" id="page">
+	<div data-role="header2">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" background="images/top1.png">
+   <tr>
+      <td height="32"><img src="images/logo_small.png" width="108" height="24"></td>
+   </tr>
+</table>
+	</div>
+	<div data-role="content">
+	   <table width="100%" border="0" cellspacing="0" cellpadding="2" background="images/fondo.jpg"><form id="loginForm" >
+	      <tr>
+	         <td align="center"><p>Ingrese su Apellido y N&uacute;mero de habtiaci&oacute;n</p></td>
+          </tr>
+	      <tr>
+	         <td align="center"><input name="login" type="text" id="login" value="HABITACI&Oacute;N" size="12" data-clear-btn="true" onKeyUp="login()"><input name="password" id="password" type="text" data-clear-btn="true" value="APELLIDO" size="15" onKeyUp="login()"></td>
+          </tr>
+	      <tr>
+	         <td align="center"><p>C&oacute;digo del Hotel (Obtengalo en recepci&oacute;n)</p></td>
+          </tr>
+          	      <tr>
+	         <td align="center"><input name="codigoh" type="text" id="codigoh" value="CODIGO" size="10" onKeyUp="login()"></td>
+          </tr>
+                    <tr>
+          <td align="center"><input type="submit" value="enviar" name="btn_enviar" id="btn_enviar" onClick="login()">          </tr>
+          	      <tr>
+	         <td>&nbsp;</td>
+          </tr>          
+       </form></table>
+<script type="text/javascript">
+ function login() {
+            $(document).ready(function() {
+           var user = $("#login").val();
+           var pass = $("#password").val();
+     $.ajax({
+            url: "http://www.wifienter.net/app/testoi.php",  
+            type: "GET",        
+            data: { username: user, password: pass },     
+            cache: false,
+            success: function (html) {  
+            $(html).find('market').each(function(){
+			var market = $(this);
+			 var room = market.attr('room');
+				if (room != "" && room != "Login Failed") {
+                        var hab_db = market.attr('room');
+						var nom_db = market.attr('nombre');
+						var fol_db = market.attr('folio');
+						var sal_db = market.attr('salida');
+						var lle_db = market.attr('llegada');	
+						                        localStorage.setItem("roomdb", hab_db);
+												localStorage.setItem("nombredb", nom_db);
+												localStorage.setItem("foliodb", fol_db);
+												localStorage.setItem("salidadb", sal_db);
+												localStorage.setItem("llegadadb", lle_db);					
+						document.location.href = "main.html";
+                    } else {
+                        alert("Login Failed");
+                    }
+				
+				});      
+            }   
+          });
+       });
+}   
+</script>
+
+	   </div>
+</div>
+
+<!--Aqui va El reSto-->
+
+</body>
+</html>
